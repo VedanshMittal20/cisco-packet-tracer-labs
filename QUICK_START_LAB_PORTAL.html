@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Computer Networks Lab - Practical Exam Portal</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --success: #22c55e;
+      --code-bg: #090d16;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 24px; }
+    header { max-width: 1100px; margin: 0 auto 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    h1 { font-size: 24px; font-weight: 700; color: var(--accent); }
+    p.subtitle { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
+    .nav-tabs { display: flex; gap: 8px; max-width: 1100px; margin: 0 auto 20px; overflow-x: auto; }
+    .tab-btn { background: var(--card-bg); border: 1px solid var(--border); color: var(--text); padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; white-space: nowrap; }
+    .tab-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+    h2 { font-size: 18px; margin-bottom: 12px; color: #e2e8f0; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 15px; color: var(--accent); margin: 16px 0 8px; }
+    ol, ul { padding-left: 20px; line-height: 1.6; font-size: 14px; color: #cbd5e1; }
+    li { margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+    th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+    th { background: #162032; color: var(--accent); }
+    .code-container { position: relative; margin: 12px 0; }
+    pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 6px; padding: 14px; overflow-x: auto; font-family: "Consolas", "Courier New", monospace; font-size: 13px; color: #38bdf8; line-height: 1.4; }
+    .copy-btn { position: absolute; top: 8px; right: 8px; background: #334155; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; }
+    .copy-btn:hover { background: var(--accent); color: #000; }
+    .tag { display: inline-block; background: #1e3a5f; color: var(--accent); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+    .alert { background: #3b2505; border-left: 4px solid #f59e0b; padding: 12px; border-radius: 4px; margin: 12px 0; font-size: 13px; color: #fde68a; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Computer Networks Practical Examination Portal</h1>
+    <p class="subtitle">Complete offline preparation dashboard for Experiments 1.1 through 1.5</p>
+  </header>
+
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('exp14')">Exp 1.4: Static Routing</button>
+    <button class="tab-btn" onclick="switchTab('exp15')">Exp 1.5: RIP Dynamic</button>
+    <button class="tab-btn" onclick="switchTab('exp13')">Exp 1.3: Hub vs Switch</button>
+    <button class="tab-btn" onclick="switchTab('exp12')">Exp 1.2: Windows Commands</button>
+    <button class="tab-btn" onclick="switchTab('exp11')">Exp 1.1: Basics</button>
+    <button class="tab-btn" onclick="switchTab('master-viva')">Master Viva Voce (30 Q&As)</button>
+  </div>
+
+  <div class="container">
+
+    <!-- EXP 1.4 -->
+    <div id="exp14" class="tab-pane active">
+      <div class="card">
+        <h2>Experiment 1.4: Static Routing (2 Routers, 2 PCs)</h2>
+        <div class="alert">
+          <strong>Important Lab Correction:</strong> The original lab manual contained invalid next-hop IP addresses. Use the verified commands below.
+        </div>
+        <h3>1. Addressing Table</h3>
+        <table>
+          <tr><th>Device</th><th>Interface</th><th>IP Address</th><th>Subnet Mask</th><th>Default Gateway</th></tr>
+          <tr><td>PC0</td><td>Fa0</td><td>10.0.0.2</td><td>255.0.0.0</td><td>10.0.0.1</td></tr>
+          <tr><td>Router0</td><td>Fa0/0</td><td>10.0.0.1</td><td>255.0.0.0</td><td>-</td></tr>
+          <tr><td>Router0</td><td>Fa1/0</td><td>192.168.1.1</td><td>255.255.255.0</td><td>-</td></tr>
+          <tr><td>Router1</td><td>Fa1/0</td><td>192.168.1.2</td><td>255.255.255.0</td><td>-</td></tr>
+          <tr><td>Router1</td><td>Fa0/0</td><td>20.0.0.1</td><td>255.0.0.0</td><td>-</td></tr>
+          <tr><td>PC1</td><td>Fa0</td><td>20.0.0.2</td><td>255.0.0.0</td><td>20.0.0.1</td></tr>
+        </table>
+
+        <h3>2. Cabling</h3>
+        <ul>
+          <li>PC0 to Router0 (Fa0/0): <strong>Copper Straight-Through</strong></li>
+          <li>Router0 (Fa1/0) to Router1 (Fa1/0): <strong>Copper Cross-Over</strong></li>
+          <li>Router1 (Fa0/0) to PC1: <strong>Copper Straight-Through</strong></li>
+        </ul>
+
+        <h3>3. Router 0 CLI Configuration</h3>
+        <div class="code-container">
+          <button class="copy-btn" onclick="copyCode('r0-static')">Copy Config</button>
+          <pre id="r0-static">enable
+configure terminal
+interface fastEthernet 0/0
+ ip address 10.0.0.1 255.0.0.0
+ no shutdown
+ exit
+interface fastEthernet 1/0
+ ip address 192.168.1.1 255.255.255.0
+ no shutdown
+ exit
+ip route 20.0.0.0 255.0.0.0 192.168.1.2
+end
+write memory</pre>
+        </div>
+
+        <h3>4. Router 1 CLI Configuration</h3>
+        <div class="code-container">
+          <button class="copy-btn" onclick="copyCode('r1-static')">Copy Config</button>
+          <pre id="r1-static">enable
+configure terminal
+interface fastEthernet 0/0
+ ip address 20.0.0.1 255.0.0.0
+ no shutdown
+ exit
+interface fastEthernet 1/0
+ ip address 192.168.1.2 255.255.255.0
+ no shutdown
+ exit
+ip route 10.0.0.0 255.0.0.0 192.168.1.1
+end
+write memory</pre>
+        </div>
+
+        <h3>5. Verification in PC0 Command Prompt</h3>
+        <div class="code-container">
+          <pre>ping 20.0.0.2
+tracert 20.0.0.2</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXP 1.5 -->
+    <div id="exp15" class="tab-pane">
+      <div class="card">
+        <h2>Experiment 1.5: Dynamic Routing using RIPv2 (4-Router Diamond)</h2>
+        <p>Use model <strong>Router-PT</strong> for all 4 routers because it has FastEthernet and Serial ports built-in.</p>
+        
+        <h3>1. Router 0 (Left - LAN: 192.168.1.0/24)</h3>
+        <div class="code-container">
+          <button class="copy-btn" onclick="copyCode('r0-rip')">Copy Config</button>
+          <pre id="r0-rip">enable
+conf t
+interface fa0/0
+ ip address 192.168.1.1 255.255.255.0
+ no shut
+ exit
+interface serial 2/0
+ ip address 10.0.0.1 255.0.0.0
+ clock rate 64000
+ no shut
+ exit
+interface serial 3/0
+ ip address 20.0.0.1 255.0.0.0
+ clock rate 64000
+ no shut
+ exit
+router rip
+ version 2
+ network 10.0.0.0
+ network 20.0.0.0
+ network 192.168.1.0
+ no auto-summary
+end
+write memory</pre>
+        </div>
+
+        <h3>2. Router 1 (Top Transit)</h3>
+        <div class="code-container">
+          <button class="copy-btn" onclick="copyCode('r1-rip')">Copy Config</button>
+          <pre id="r1-rip">enable
+conf t
+interface serial 2/0
+ ip address 10.0.0.2 255.0.0.0
+ no shut
+ exit
+interface serial 3/0
+ ip address 30.0.0.1 255.0.0.0
+ clock rate 64000
+ no shut
+ exit
+router rip
+ version 2
+ network 10.0.0.0
+ network 30.0.0.0
+ no auto-summary
+end
+write memory</pre>
+        </div>
+
+        <h3>3. Router 2 (Bottom Transit)</h3>
+        <div class="code-container">
+          <button class="copy-btn" onclick="copyCode('r2-rip')">Copy Config</button>
+          <pre id="r2-rip">enable
+conf t
+interface serial 2/0
+ ip address 40.0.0.1 255.0.0.0
+ clock rate 64000
+ no shut
+ exit
+interface serial 3/0
+ ip address 20.0.0.2 255.0.0.0
+ no shut
+ exit
+router rip
+ version 2
+ network 20.0.0.0
+ network 40.0.0.0
+ no auto-summary
+end
+write memory</pre>
+        </div>
+
+        <h3>4. Router 3 (Right - LAN: 172.16.0.0/16)</h3>
+        <div class="code-container">
+          <button class="copy-btn" onclick="copyCode('r3-rip')">Copy Config</button>
+          <pre id="r3-rip">enable
+conf t
+interface fa0/0
+ ip address 172.16.10.1 255.255.0.0
+ no shut
+ exit
+interface serial 2/0
+ ip address 40.0.0.2 255.0.0.0
+ no shut
+ exit
+interface serial 3/0
+ ip address 30.0.0.2 255.0.0.0
+ no shut
+ exit
+router rip
+ version 2
+ network 30.0.0.0
+ network 40.0.0.0
+ network 172.16.0.0
+ no auto-summary
+end
+write memory</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXP 1.3 -->
+    <div id="exp13" class="tab-pane">
+      <div class="card">
+        <h2>Experiment 1.3: Hub vs Switch Simulation</h2>
+        <h3>Key Steps</h3>
+        <ol>
+          <li>Place <strong>1 PT-Hub</strong> and 4 PCs (`192.168.1.1` through `.4`).</li>
+          <li>Press <strong>Shift + S</strong> to switch to <strong>Simulation Mode</strong>.</li>
+          <li>Set filter to <strong>ICMP only</strong>.</li>
+          <li>Send Simple PDU from PC0 to PC1 $\rightarrow$ Observe packet broadcasting to all 3 other PCs (PC2 & PC3 reject with red X).</li>
+          <li>Replace Hub with <strong>2960 Switch</strong> $\rightarrow$ Ping once $\rightarrow$ Resend PDU in Simulation $\rightarrow$ Packet unicasts directly only to PC1.</li>
+          <li>Show MAC table in Switch CLI: <code>show mac address-table</code>.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- EXP 1.2 -->
+    <div id="exp12" class="tab-pane">
+      <div class="card">
+        <h2>Experiment 1.2: Windows Networking CLI Commands</h2>
+        <table>
+          <tr><th>Command</th><th>Syntax</th><th>Demonstration Point</th></tr>
+          <tr><td>hostname</td><td><code>hostname</code></td><td>Machine netBIOS identity</td></tr>
+          <tr><td>ipconfig</td><td><code>ipconfig /all</code></td><td>IP, Mask, Gateway, MAC, DHCP state</td></tr>
+          <tr><td>ping</td><td><code>ping 8.8.8.8 -n 4</code></td><td>ICMP reachability, RTT, packet loss</td></tr>
+          <tr><td>tracert</td><td><code>tracert -d 8.8.8.8</code></td><td>Hop-by-hop path via TTL increments</td></tr>
+          <tr><td>netstat</td><td><code>netstat -ano</code></td><td>Open ports, active TCP/UDP sockets, PIDs</td></tr>
+          <tr><td>arp</td><td><code>arp -a</code></td><td>Layer 3 IP to Layer 2 MAC translation cache</td></tr>
+          <tr><td>nslookup</td><td><code>nslookup google.com</code></td><td>DNS record resolution on UDP port 53</td></tr>
+          <tr><td>route</td><td><code>route print</code></td><td>Host routing table and default gateway route</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- EXP 1.1 -->
+    <div id="exp11" class="tab-pane">
+      <div class="card">
+        <h2>Experiment 1.1: Core Viva Exam Questions</h2>
+        <h3>1. What are the IP Classes?</h3>
+        <ul>
+          <li><strong>Class A:</strong> 1 - 126 (Mask: 255.0.0.0)</li>
+          <li><strong>Class B:</strong> 128 - 191 (Mask: 255.255.0.0)</li>
+          <li><strong>Class C:</strong> 192 - 223 (Mask: 255.255.255.0)</li>
+          <li>(127.0.0.0 is loopback address)</li>
+        </ul>
+        <h3>2. What is the difference between Straight and Cross-over cable?</h3>
+        <ul>
+          <li><strong>Straight-Through:</strong> Connects unlike devices (PC to Switch, Switch to Router).</li>
+          <li><strong>Cross-Over:</strong> Connects like devices (PC to PC, Router to Router, PC to Router).</li>
+        </ul>
+        <h3>3. What are the Router memory components?</h3>
+        <ul>
+          <li><strong>RAM:</strong> Volatile; holds running-config and routing tables.</li>
+          <li><strong>NVRAM:</strong> Non-volatile; holds startup-config.</li>
+          <li><strong>Flash:</strong> Holds Cisco IOS operating system images.</li>
+          <li><strong>ROM:</strong> Bootstrap program and POST diagnostics.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- MASTER VIVA -->
+    <div id="master-viva" class="tab-pane">
+      <div class="card">
+        <h2>Master Viva Voce Guide (All 30 Exam Questions & Answers)</h2>
+        <p style="color:var(--text-muted); margin-bottom: 16px;">Also available as Markdown: <code>ALL_VIVA_QUESTIONS_AND_ANSWERS.md</code></p>
+
+        <h3>1. OSI & Network Basics</h3>
+        <ul>
+          <li><strong>7 Layers of OSI:</strong> Physical (Bits), Data Link (Frames), Network (Packets), Transport (Segments), Session, Presentation, Application (Data).</li>
+          <li><strong>TCP vs UDP:</strong> TCP is connection-oriented, reliable (3-way handshake SYN, SYN-ACK, ACK), slower. UDP is connectionless, best-effort, no handshake, lightweight.</li>
+          <li><strong>Collision vs Broadcast Domain:</strong> Hub has 1 collision & 1 broadcast domain. Switch has 1 collision domain per port, 1 broadcast domain total. Router separates both collision and broadcast domains on every port.</li>
+        </ul>
+
+        <h3>2. Devices & Cabling (Exp 1.1)</h3>
+        <ul>
+          <li><strong>Hub vs Switch vs Router:</strong> Hub is Layer 1 (repeats to all ports, half-duplex). Switch is Layer 2 (MAC address learning, unicast forwarding, full-duplex). Router is Layer 3 (routes packets between different subnets using IP).</li>
+          <li><strong>Straight-Through vs Cross-Over:</strong> Straight-through connects unlike devices (PC-to-Switch, Switch-to-Router). Cross-over connects like devices (Router-to-Router, PC-to-PC, PC-to-Router).</li>
+          <li><strong>Router Memory:</strong> RAM (volatile, running-config), NVRAM (permanent, startup-config), Flash (Cisco IOS image), ROM (Bootstrap, POST).</li>
+          <li><strong>IP Classes:</strong> Class A (1-126, mask 255.0.0.0), Class B (128-191, mask 255.255.0.0), Class C (192-223, mask 255.255.255.0), 127 is loopback.</li>
+        </ul>
+
+        <h3>3. Command Prompt Commands (Exp 1.2)</h3>
+        <ul>
+          <li><strong>Ping protocol:</strong> Uses ICMP (Internet Control Message Protocol), Type 8 (Echo Request), Type 0 (Echo Reply). Does NOT use TCP/UDP ports.</li>
+          <li><strong>TTL (Time To Live):</strong> 8-bit hop counter (max 255) decremented by 1 at each router to prevent infinite routing loops. Drops at 0 with ICMP Type 11 (Time Exceeded).</li>
+          <li><strong>How Tracert works:</strong> Sends packets starting with TTL=1, then TTL=2, etc., causing intermediate routers to return ICMP Time Exceeded until the destination is reached.</li>
+          <li><strong>ARP:</strong> Address Resolution Protocol. Maps Layer 3 IP address to Layer 2 physical MAC address. <code>arp -a</code> displays local cache.</li>
+          <li><strong>ipconfig vs ipconfig /all:</strong> <code>ipconfig</code> shows basic IP/Mask/Gateway. <code>/all</code> shows MAC, DHCP server, DNS server, lease info.</li>
+        </ul>
+
+        <h3>4. Hub vs Switch (Exp 1.3)</h3>
+        <ul>
+          <li><strong>Why Hubs are insecure:</strong> They broadcast all traffic to all ports; any host in promiscuous mode can capture all conversations.</li>
+          <li><strong>How a Switch learns:</strong> Reads the <em>Source MAC</em> of incoming frames to populate its CAM/MAC table, then forwards unicast based on <em>Destination MAC</em>. Floods unknown unicast.</li>
+          <li><strong>Command:</strong> <code>show mac address-table</code></li>
+        </ul>
+
+        <h3>5. Static Routing (Exp 1.4)</h3>
+        <ul>
+          <li><strong>Static Route Syntax:</strong> <code>ip route &lt;dest-network&gt; &lt;subnet-mask&gt; &lt;next-hop-ip&gt;</code></li>
+          <li><strong>Administrative Distance (AD):</strong> Priority/trustworthiness of a route (lower is preferred). Connected = 0, Static = 1, RIP = 120.</li>
+          <li><strong>Default Route:</strong> <code>ip route 0.0.0.0 0.0.0.0 &lt;next-hop&gt;</code> (Gateway of Last Resort).</li>
+          <li><strong>Floating Static Route:</strong> Static route given a higher AD (e.g., 130) as a backup for a dynamic route.</li>
+        </ul>
+
+        <h3>6. Dynamic Routing & RIP (Exp 1.5)</h3>
+        <ul>
+          <li><strong>RIP Characteristics:</strong> Distance Vector protocol, Bellman-Ford algorithm, metric is <em>Hop Count</em> (Max 15, 16 is infinity/unreachable), AD is 120, UDP port 520, updates sent every 30 seconds.</li>
+          <li><strong>RIPv1 vs RIPv2:</strong> RIPv1 is classful, broadcasts to 255.255.255.255, no VLSM. RIPv2 is classless, multicasts to 224.0.0.9, supports VLSM/CIDR, supports MD5 authentication.</li>
+          <li><strong>Loop Prevention:</strong> Split Horizon (don't advertise route back out incoming port), Route Poisoning (set metric to 16 immediately on failure), Poison Reverse, Holddown Timers.</li>
+          <li><strong>Why Clock Rate?</strong> Serial DCE interfaces must provide clocking synchronization pulses for the DTE end. Configured with <code>clock rate 64000</code>.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function switchTab(id) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      event.target.classList.add('active');
+    }
+    function copyCode(elementId) {
+      const code = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        alert("Configuration copied to clipboard!");
+      });
+    }
+  </script>
+</body>
+</html>
